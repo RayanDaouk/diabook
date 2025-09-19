@@ -1,0 +1,24 @@
+<p>recipe-details works!</p>
+<div>
+  <img
+    [src]="showRecipe().pictureUrl"
+    [alt]="'Photo de ' + showRecipe().name"
+  />
+  <h3>{{ showRecipe().name }}</h3>
+  <div>
+    @for (moment of showRecipe().moment; track $index) {
+    {{ moment }}
+    }
+  </div>
+  <div>
+    @for (insulin of showRecipe().insulins; track $index) {
+    <div>{{ insulin.name }} / {{ insulin.units }}</div>
+    }
+  </div>
+  <ul>
+    @for (ingredient of showRecipe().ingredients; track $index) {
+    <li>{{ ingredient }}</li>
+    }
+  </ul>
+  <div>{{ showRecipe().infos}}</div>
+</div>

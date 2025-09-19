@@ -1,0 +1,87 @@
+<form (submit)="submit()" [formGroup]="createRecipeForm">
+  <div class="form-item">
+    <label for="recipe-img">Image du repas</label>
+    <input
+      id="recipe-img"
+      formControlName="pictureUrl"
+      type="text"
+      placeholder="Url"
+    />
+  </div>
+  <div class="form-item">
+    <label for="recipe-name">Nom du repas</label>
+    <input id="recipe-name" type="text" formControlName="name" />
+  </div>
+  <div class="form-item">
+    <label>Moment du repas</label>
+    <div class="moments-container">
+      @for (momentValue of ['matin','midi','soir']; track $index) {
+      <div class="radio-item">
+        <input
+          type="checkbox"
+          [value]="momentValue"
+          [checked]="moment.value.includes(moment)"
+          (change)="onMomentChange($event)"
+          #momentCheckbox
+        />
+        <label for="evening">{{ momentValue | titlecase }}</label>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-item">
+    <label>Les ingrédients:</label>
+    <div class="add-ingredient--section">
+      <button type="button" (click)="addIngredient()">+</button>
+    </div>
+    <!-- -------------- -->
+    <ul class="ingredient-list" formArrayName="ingredients">
+      @for (ingredient of ingredients.controls; track ingredient) {
+      <li>
+        <input [formControlName]="$index" type="text" />
+        <button (click)="deleteIngredient($index)">X</button>
+      </li>
+      } @empty {
+      <p>Aucuns ingrédients pour le moment</p>
+      }
+    </ul>
+  </div>
+
+  <div class="form-item">
+    <label>Insuline(s):</label>
+    <div class="add-insulin--section">
+      <button type="button" (click)="addInsulin()">+</button>
+    </div>
+    <ul class="insulin-list" formArrayName="insulins">
+      @for (insulin of insulins.controls; track $index) {
+      <li [formGroupName]="$index">
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Nom de l'insuline"
+        />
+        <input
+          type="number"
+          formControlName="units"
+          placeholder="Unité(s)"
+          min="0"
+          step=".5"
+        />
+        <button type="button" (click)="deleteInsulin($index)">X</button>
+      </li>
+      } @empty {
+      <p>Aucune insuline pour le moment</p>
+      }
+    </ul>
+  </div>
+  <div class="form-item">
+    <label for="recipe-infos">Informations</label>
+    <input id="recipe-infos" type="text" formControlName="infos" />
+  </div>
+  <div class="form-item">
+    <button type="submit btn btn-promary" [disabled]="createRecipeForm.invalid">
+      Sauvegarder
+    </button>
+  </div>
+</form>

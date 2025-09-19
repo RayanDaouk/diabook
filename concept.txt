@@ -1,0 +1,26 @@
+Une web app pour diabétique.
+
+Objectif:
+Générer un carnet alimentaire durable, imprimable facilement.
+
+Features:
+1) Carnet alimentaire
+	-> 1 repas sauvegarder = 1 titre, Composition de l'assiette (aliment + poids), insulines, midi/soir
+				1 repas = pouvoir lier une activité qui a suivi: marche/sport/pas d'activité + impacte glycémique
+
+2) Liaison avec un blog où les diabétiques peuvent partager leurs recettes pratiques (section recettes).
+	Section partage (1 rubrique hypo, 1 rubrique hyper).
+	Systeme de tchat publique et privé, création de groupe pour les partages.
+
+4) Journal: Des articles à lire sur l'avancement des recherches sur le diabète, les nouvelles molécules
+
+3) Map dynamique avec recensement des resto, avec une quotation pour les diabétiques:
+	- Carte convenable pour les diabétiques ou non
+	- Impacte glycémique (via un formulaire: Quel repas avez-vous testé(s) dans ce resto?
+						Impacte sur votre glycémie?
+						Votre hypothèse que l'hyperglycémie/hypoglycémie que vous avez eu? )
+4) Partenariat formation avec des hôpitaux.
+
+
+Grand jalon: créer une base de donnée utilisateur qui permet de comparer et de générer des statistiques en % des utilisateurs diabétiques
+(utilisation des molécules, etc...) Avec leur équilibre de vie.

@@ -1,0 +1,34 @@
+<app-sub-menu></app-sub-menu>
+<div>
+  <ul>
+    @for (recipe of recipeList(); track recipe._id) {
+    <li class="recipe-item">
+      <h3 class="recipe-name">{{ recipe.name }}</h3>
+      <div class="recipe-moment--container">
+        @for (moment of recipe.moment; track $index) {
+        <span class="recipe-moment--item" [class]="'moment-' + moment">{{
+          moment
+        }}</span>
+        }
+      </div>
+      <div class="recipe-btns--container">
+        <button
+          class="btn btn-square btn-primary"
+          (click)="setSelectedRecipe(recipe._id!)"
+        >
+          O
+        </button>
+        <!-- <a
+          class="btn btn-square btn-primary"
+          routerLink="/recipe/edit/recipe._id"
+        >
+          Edit
+        </a> -->
+      </div>
+    </li>
+    }
+  </ul>
+</div>
+@let sr = selectedRecipe(); @if (sr) {
+<app-recipe-details [showRecipe]="sr" />
+}
