@@ -1,8 +1,11 @@
 import { TitleCasePipe } from '@angular/common';
 import {
   Component,
+  effect,
   ElementRef,
   inject,
+  input,
+  OnChanges,
   signal,
   viewChild,
   viewChildren,
@@ -16,7 +19,7 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { Recipe } from '../../../../shared/services/recipe';
+import { Recipe as RecipeService } from '../../../../shared/services/recipe';
 import { recipe } from '../../../../shared/interfaces/recipe.interface';
 
 @Component({
@@ -26,13 +29,16 @@ import { recipe } from '../../../../shared/interfaces/recipe.interface';
   styleUrl: './recipe-form.scss',
 })
 export class RecipeForm {
-  private recipeService = inject(Recipe);
+  private recipeService = inject(RecipeService);
   private formBuilder = inject(FormBuilder);
   checkboxList = viewChildren<ElementRef<HTMLInputElement>>('momentCheckbox');
+  getRecipe = input<recipe>();
+  recipeList = this.recipeService.recipes();
 
   createRecipeForm = this.formBuilder.group({
-    pictureUrl: this.formBuilder.control(''),
-    name: this.formBuilder.control('', {
+    _id: this.formBuilder.control(this.getRecipe()?._id || null),
+    pictureUrl: this.formBuilder.control(this.getRecipe()?.pictureUrl || ''),
+    name: this.formBuilder.control(this.getRecipe()?.name || '', {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -42,7 +48,7 @@ export class RecipeForm {
       Validators.required
     ),
     ingredients: this.formBuilder.array([], Validators.required),
-    insulins: this.formBuilder.array([], Validators.required),
+    insulins: this.formBuilder.array<FormGroup>([], Validators.required),
   });
 
   newIngredient = signal('');
@@ -110,12 +116,7 @@ export class RecipeForm {
     this.insulins.removeAt(index);
   }
 
-  async submit() {
-    // console.log('Form recipe:', this.createRecipeForm.value);
-    const formValue = this.createRecipeForm.getRawValue() as recipe;
-    this.recipeService.addRecipe(formValue);
-
-    // Clear:
+  clearForm() {
     this.createRecipeForm.reset({
       pictureUrl: '',
       name: '',
@@ -127,6 +128,76 @@ export class RecipeForm {
     const checkboxes = this.checkboxList();
     checkboxes.forEach((checkbox) => {
       checkbox.nativeElement.checked = false;
+    });
+  }
+
+  async submit() {
+    const formValue = this.createRecipeForm.getRawValue() as recipe;
+    console.log('formValue:', formValue);
+    // vérifier si _id existe et correspond à une recette existante
+    const existingRecipe = this.recipeList.find((recipe) => {
+      console.log('list:', this.recipeList);
+      console.log('Comparing:', recipe._id, 'with', formValue._id);
+      return recipe._id === formValue._id;
+    });
+
+    if (existingRecipe) {
+      console.log('update Recipe');
+      this.recipeService.updateRecipe(formValue);
+    } else {
+      console.log('Add new Recipe');
+      this.recipeService.addRecipe(formValue);
+    }
+  }
+
+  private patchForm(targetRecipe: recipe) {
+    this.clearForm();
+    const checkboxes = this.checkboxList();
+
+    this.createRecipeForm.patchValue({
+      _id: targetRecipe._id,
+      pictureUrl: targetRecipe.pictureUrl || '',
+      name: targetRecipe.name,
+      infos: targetRecipe.infos || '',
+    });
+
+    targetRecipe.moment.forEach((m) =>
+      this.moment.push(this.formBuilder.control(m))
+    );
+    checkboxes.forEach((checkbox) => {
+      checkbox.nativeElement.checked = targetRecipe.moment.includes(
+        checkbox.nativeElement.value as 'matin' | 'midi' | 'soir'
+      );
+    });
+
+    targetRecipe.ingredients.forEach((ingredient) =>
+      this.ingredients.push(
+        this.formBuilder.control(ingredient, Validators.required)
+      )
+    );
+
+    const insulinGroups = targetRecipe.insulins.map((insulin, index) =>
+      this.formBuilder.group({
+        name: [insulin.name, Validators.required],
+        units: [insulin.units, [Validators.required, Validators.min(0.5)]],
+      })
+    );
+    this.createRecipeForm.setControl(
+      'insulins',
+      this.formBuilder.array(insulinGroups)
+    );
+
+    // Close form:
+    
+  }
+
+  constructor() {
+    effect(() => {
+      const recipe = this.getRecipe();
+      if (recipe) {
+        // console.log('Patching form with recipe:', recipe);
+        this.patchForm(recipe);
+      }
     });
   }
 }

@@ -20,5 +20,11 @@
     <li>{{ ingredient }}</li>
     }
   </ul>
-  <div>{{ showRecipe().infos}}</div>
+  <div>{{ showRecipe().infos }}</div>
+  <button type="button" (click)="editingRecipe.set(!editingRecipe())">
+    Modifier
+  </button>
+  @if (editingRecipe()) {
+  <app-recipe-form [getRecipe]="showRecipe()" />
+  }
 </div>

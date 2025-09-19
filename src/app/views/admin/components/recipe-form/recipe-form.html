@@ -54,7 +54,7 @@
       <button type="button" (click)="addInsulin()">+</button>
     </div>
     <ul class="insulin-list" formArrayName="insulins">
-      @for (insulin of insulins.controls; track $index) {
+      @for (insulin of insulins.controls; track insulin.value.name) {
       <li [formGroupName]="$index">
         <input
           type="text"

@@ -12,12 +12,12 @@ export class Recipe {
     this.recipes.update((current) => [...current, newRecipe]);
     console.log('liste de repas:', this.recipes());
   }
-  updateRecipe(recipeId: string) {
-    // this.recipes.update((current) =>
-    //   current.map((recipe) =>
-    //     recipe._id === recipeId ? { ...recipe, ...updatedRecipe } : recipe
-    //   )
-    // );
+  updateRecipe(changedRecipe: recipe) {
+    this.recipes.update((current) =>
+      current.map((recipe) =>
+        recipe._id === changedRecipe._id ? changedRecipe : recipe
+      )
+    );
   }
   deleteRecipe(recipeId: string) {
     this.recipes.update((current) =>

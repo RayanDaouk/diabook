@@ -8,6 +8,12 @@ Features:
 	-> 1 repas sauvegarder = 1 titre, Composition de l'assiette (aliment + poids), insulines, midi/soir
 				1 repas = pouvoir lier une activité qui a suivi: marche/sport/pas d'activité + impacte glycémique
 
+
+WIP: stabiliser le warn de "insulin".
+Cacher le formulaire quand updatée.
+
+
+
 2) Liaison avec un blog où les diabétiques peuvent partager leurs recettes pratiques (section recettes).
 	Section partage (1 rubrique hypo, 1 rubrique hyper).
 	Systeme de tchat publique et privé, création de groupe pour les partages.
