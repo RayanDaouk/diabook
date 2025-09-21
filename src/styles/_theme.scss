@@ -1,3 +1,6 @@
+@use "./mixin" as *;
+@use "./variables";
+
 .radius {
   border-radius: var(--radius);
 }
@@ -8,7 +11,7 @@
 body {
   font-family: var(--font-family);
   font-optical-sizing: auto;
-  color: var(--txt-color);
+  color: var(--text-color);
 }
 
 .text-primary {
@@ -86,9 +89,18 @@ button[disabled] {
 // Els------------------
 // ---------------------
 .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   padding: 24px;
   border-radius: var(--radius);
   border: var(--border);
+  background-color: var(--gray-50);
+  .card-img {
+    aspect-ratio: 429 / 318;
+    object-fit: cover;
+  }
 }
 .active-item {
   background-color: var(--light);
@@ -101,7 +113,89 @@ button[disabled] {
   color: white;
 }
 
-.input {
+// -----------------
+.icon {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  @include breakpoint(large) {
+    padding: 4px;
+  }
+  &.btn {
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      background-color: var(--gray-100);
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.4s ease;
+      z-index: 0;
+      pointer-events: none;
+    }
+    &:hover {
+      &:after {
+        transform: translate(-50%, -50%) scale(1.3);
+      }
+    }
+  }
+}
+
+// Moments els:
+.recipe-moment--item {
+  padding: 0;
+  display: block;
+  width: fit-content;
+  &:before {
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-light);
+  }
+}
+.moment-matin {
+  position: relative;
+  grid-column: 1;
+  &:before {
+    @include icon(morning);
+  }
+}
+.moment-midi {
+  position: relative;
+  grid-column: 2;
+  &:before {
+    @include icon(sun);
+    margin-left: 2px;
+  }
+}
+.moment-soir {
+  position: relative;
+  grid-column: 3;
+  &:before {
+    @include icon(evening);
+  }
+}
+
+// Form:
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  @include breakpoint(large) {
+    gap: 24px;
+  }
+}
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+input {
   border: var(--border);
   border-radius: 6px;
   padding: 12px;

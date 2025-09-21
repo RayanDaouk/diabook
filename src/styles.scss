@@ -2,3 +2,11 @@
 @use "styles/reset";
 @use "styles/variables";
 @use "styles/theme";
+@use "styles/mixin" as *;
+
+body {
+  padding: 8px;
+  @include breakpoint(medium) {
+    padding: 16px;
+  }
+}

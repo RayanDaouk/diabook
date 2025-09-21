@@ -5,7 +5,9 @@ import {
   ElementRef,
   inject,
   input,
+  model,
   OnChanges,
+  output,
   signal,
   viewChild,
   viewChildren,
@@ -24,7 +26,7 @@ import { recipe } from '../../../../shared/interfaces/recipe.interface';
 
 @Component({
   selector: 'app-recipe-form',
-  imports: [ReactiveFormsModule, FormsModule, TitleCasePipe],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './recipe-form.html',
   styleUrl: './recipe-form.scss',
 })
@@ -34,6 +36,7 @@ export class RecipeForm {
   checkboxList = viewChildren<ElementRef<HTMLInputElement>>('momentCheckbox');
   getRecipe = input<recipe>();
   recipeList = this.recipeService.recipes();
+  EditingRecipe = model<boolean>();
 
   createRecipeForm = this.formBuilder.group({
     _id: this.formBuilder.control(this.getRecipe()?._id || null),
@@ -148,6 +151,7 @@ export class RecipeForm {
       console.log('Add new Recipe');
       this.recipeService.addRecipe(formValue);
     }
+    this.EditingRecipe.set(false);
   }
 
   private patchForm(targetRecipe: recipe) {
@@ -186,9 +190,6 @@ export class RecipeForm {
       'insulins',
       this.formBuilder.array(insulinGroups)
     );
-
-    // Close form:
-    
   }
 
   constructor() {

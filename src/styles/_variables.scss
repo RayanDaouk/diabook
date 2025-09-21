@@ -1,10 +1,21 @@
+$breakpoints: (
+  small: 375px,
+  medium: 768px,
+  large: 1024px,
+  xlarge: 1280px,
+  wide: 1440px,
+);
+
 :root {
   --font-family: "Montserrat", sans-serif;
-  --text-color: #222;
+  --text-color: #434443;
+  --gray-50: #f8fffc;
   --gray-100: #dfe6e9;
+  --gray-500: #acacac;
   --gray-700: #2c3a47;
   --light: #e9d5ff;
-  --primary: #22ce5b;
+  --primary-light: #6ae493;
+  --primary: #29d061;
   --primary-dark: #13883a;
   --success: #00ff5e;
   --error: #ff0000;
@@ -12,4 +23,8 @@
   --warning: #ffbb00;
   --border: 1px solid var(--gray-100);
   --radius: 24px;
+
+  @each $key, $value in $breakpoints {
+    --breakpoint-#{$key}: #{$value};
+  }
 }

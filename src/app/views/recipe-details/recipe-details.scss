@@ -1,0 +1,61 @@
+@use "../../../styles/mixin" as *;
+
+.recipe-details--container {
+  position: relative;
+}
+h3 {
+  text-align: center;
+}
+.recipe-moment--container {
+  display: flex;
+  gap: 8px;
+}
+.recipe-heading {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: center;
+  @include breakpoint(medium) {
+    gap: 42px;
+  }
+}
+.recipe-ingredients--list {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-edit {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  padding: 0;
+  &:before {
+    @include icon(edit);
+    width: 42px;
+    height: 42px;
+    background-color: var(--primary);
+    transition: background-color 0.4s ease;
+  }
+  &:after {
+    background-color: white;
+    transform: translate(-50%, -50%) scale(1) !important;
+    opacity: 1;
+  }
+  &:hover {
+    &:before {
+      background-color: var(--primary-dark);
+    }
+  }
+}
+
+.edit-form {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 2;
+  overflow-y: scroll;
+}

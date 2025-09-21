@@ -1,30 +1,46 @@
-<p>recipe-details works!</p>
-<div>
-  <img
-    [src]="showRecipe().pictureUrl"
-    [alt]="'Photo de ' + showRecipe().name"
-  />
-  <h3>{{ showRecipe().name }}</h3>
-  <div>
-    @for (moment of showRecipe().moment; track $index) {
-    {{ moment }}
-    }
+<div class="recipe-details--container">
+  <div class="card">
+    <img
+      class="card-img"
+      [src]="showRecipe().pictureUrl"
+      [alt]="'Photo de ' + showRecipe().name"
+    />
+    <h3>{{ showRecipe().name }}</h3>
+    <div class="recipe-heading">
+      <div class="recipe-moment--container">
+        @for (moment of showRecipe().moment; track $index) {
+        <span class="recipe-moment--item" [class]="'moment-' + moment"></span>
+        }
+      </div>
+      <div>
+        @for (insulin of showRecipe().insulins; track $index) {
+        <div>{{ insulin.name }} / {{ insulin.units }}</div>
+        }
+      </div>
+    </div>
+    <div class="recipe-ingredients">
+      <h4>Liste des ingrédients:</h4>
+      <ul class="recipe-ingredients--list">
+        @for (ingredient of showRecipe().ingredients; track $index) {
+        <li>{{ ingredient }}</li>
+        }
+      </ul>
+    </div>
+    <div class="recipe-infos">
+      <h4>Infos:</h4>
+      <div class="recipe-infos">{{ showRecipe().infos }}</div>
+    </div>
+    <button
+      class="btn icon btn-edit"
+      type="button"
+      (click)="editingRecipe.set(!editingRecipe())"
+    ></button>
   </div>
-  <div>
-    @for (insulin of showRecipe().insulins; track $index) {
-    <div>{{ insulin.name }} / {{ insulin.units }}</div>
-    }
-  </div>
-  <ul>
-    @for (ingredient of showRecipe().ingredients; track $index) {
-    <li>{{ ingredient }}</li>
-    }
-  </ul>
-  <div>{{ showRecipe().infos }}</div>
-  <button type="button" (click)="editingRecipe.set(!editingRecipe())">
-    Modifier
-  </button>
   @if (editingRecipe()) {
-  <app-recipe-form [getRecipe]="showRecipe()" />
+  <app-recipe-form
+    class="edit-form card"
+    [(EditingRecipe)]="editingRecipe"
+    [getRecipe]="showRecipe()"
+  />
   }
 </div>

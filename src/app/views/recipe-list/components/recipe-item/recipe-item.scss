@@ -1,0 +1,58 @@
+@use "../../../../../styles/mixin" as *;
+
+.recipe-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.recipe-name {
+  grid-column: 1;
+}
+
+.recipe-moment--container {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  margin: 0 auto;
+  gap: 8px;
+}
+
+// .recipe-moment--item {
+//   padding: 0;
+//   display: block;
+//   width: fit-content;
+//   &:before {
+//     width: 32px;
+//     height: 32px;
+//     background-color: var(--primary-light);
+//   }
+// }
+
+.recipe-btns--container {
+  grid-column: 3;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  &:before,
+  &:after {
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary);
+  }
+}
+
+.btn-show {
+  position: relative;
+  &:before {
+    @include icon(eye);
+    background-color: var(--primary);
+    width: 32px;
+    height: 32px;
+  }
+}

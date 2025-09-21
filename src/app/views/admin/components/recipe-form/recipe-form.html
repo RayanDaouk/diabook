@@ -16,7 +16,10 @@
     <label>Moment du repas</label>
     <div class="moments-container">
       @for (momentValue of ['matin','midi','soir']; track $index) {
-      <div class="radio-item">
+      <div
+        class="radio-item recipe-moment--item"
+        [class]="'moment-' + momentValue"
+      >
         <input
           type="checkbox"
           [value]="momentValue"
@@ -24,16 +27,17 @@
           (change)="onMomentChange($event)"
           #momentCheckbox
         />
-        <label for="evening">{{ momentValue | titlecase }}</label>
       </div>
       }
     </div>
   </div>
 
   <div class="form-item">
-    <label>Les ingrédients:</label>
+    <label>Liste des ingrédients</label>
     <div class="add-ingredient--section">
-      <button type="button" (click)="addIngredient()">+</button>
+      <button class="btn btn-primary" type="button" (click)="addIngredient()">
+        +
+      </button>
     </div>
     <!-- -------------- -->
     <ul class="ingredient-list" formArrayName="ingredients">

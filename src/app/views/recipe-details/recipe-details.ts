@@ -13,10 +13,4 @@ export class RecipeDetails {
   recipeService = inject(RecipeService);
   showRecipe = input.required<recipe>();
   editingRecipe = signal(false);
-
-  constructor() {
-    effect(() => {
-      console.log('showRecipe:', this.showRecipe());
-    });
-  }
 }

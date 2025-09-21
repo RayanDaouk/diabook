@@ -1,0 +1,10 @@
+@use "./../../../styles/mixin" as *;
+.btn-home {
+  position: relative;
+  &:before {
+    @include icon(home);
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary);
+  }
+}

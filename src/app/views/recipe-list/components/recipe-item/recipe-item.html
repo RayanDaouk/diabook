@@ -1,0 +1,14 @@
+<li class="recipe-item">
+  <h3 class="recipe-name">{{ recipe().name }}</h3>
+  <div class="recipe-moment--container">
+    @for (moment of recipe().moment; track $index) {
+    <span class="recipe-moment--item icon" [class]="'moment-' + moment"></span>
+    }
+  </div>
+  <div class="recipe-btns--container">
+    <button
+      class="icon btn btn-rounded btn-show"
+      (click)="setSelectedRecipe(recipe()._id!)"
+    ></button>
+  </div>
+</li>

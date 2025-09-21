@@ -1,45 +1,24 @@
-.recipe-item {
-  display: grid;
-  grid-template-columns: 1fr 2fr auto;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #ddd;
-}
+@use "../../../styles/mixin" as *;
 
-.recipe-name {
-  grid-column: 1;
-}
-
-.recipe-moment--container {
-  grid-column: 2;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-  align-items: center;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-.recipe-moment--item {
-  padding: 4px 8px;
-  display: block;
-  width: fit-content;
-}
-
-.recipe-btns--container {
-  grid-column: 3;
+.recipes-container {
   display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
+  flex-direction: column;
+  gap: 16px;
+  @include breakpoint(medium) {
+    flex-direction: row;
+    gap: 24px;
+  }
+  @include breakpoint(large) {
+    gap: 42px;
+  }
 }
 
-.moment-matin {
-  grid-column: 1;
+.recipes-list,
+.recipes-details {
+  width: 100%;
+  @include breakpoint(medium) {
+    width: 50%;
+  }
 }
-.moment-midi {
-  grid-column: 2;
-}
-.moment-soir {
-  grid-column: 3;
-}
+
+

@@ -1,0 +1,36 @@
+@use "sass:map";
+@use "sass:meta";
+@use "variables";
+
+@mixin breakpoint($size) {
+  // ident is a string without "" on dart sass
+  @if meta.type-of($size) == "string" or meta.type-of($size) == "ident" {
+    $breakpoint-value: map.get(variables.$breakpoints, $size);
+
+    @if $breakpoint-value {
+      @media (min-width: $breakpoint-value) {
+        @content;
+      }
+    } @else {
+      @warn "Breakpoint '#{$size}' not found in \$breakpoints map.";
+    }
+  } @else {
+    @media (min-width: $size) {
+      @content;
+    }
+  }
+}
+
+// --------------------------------
+// ICONS:
+// --------------------------------
+@mixin icon($name) {
+  content: "";
+  position: relative;
+  z-index: 1;
+  display: block;
+  mask: url("/assets/icons/#{$name}.svg") no-repeat center;
+  mask-size: contain;
+  -webkit-mask: url("/assets/icons/#{$name}.svg") no-repeat center;
+  -webkit-mask-size: contain;
+}
