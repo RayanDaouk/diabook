@@ -1,0 +1,14 @@
+<mat-form-field>
+  <input
+    matInput
+    [ngxMatColorPicker]="picker"
+    [formControl]="colorCtr"
+    [disabled]="disabled"
+  />
+  <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+  <ngx-mat-color-picker
+    #picker
+    [touchUi]="touchUi"
+    [color]="color"
+  ></ngx-mat-color-picker>
+</mat-form-field>
